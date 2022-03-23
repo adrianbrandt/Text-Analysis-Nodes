@@ -1,3 +1,5 @@
+import org.w3c.dom.Node;
+
 import java.util.Scanner;
 
 public class textTree {
@@ -11,7 +13,9 @@ public class textTree {
                  Welcome to text analysis
                  Choose starting method:
                  Keyboard input: 1
-                 File input: 2""");
+                 File input: 2
+                 
+                 WORDS ARE SORTED FROM BOTTOM(LEFT) TO TOP(RIGHT)""");
 
         int ans = scan.nextInt();
         scan.nextLine();
@@ -33,7 +37,6 @@ public class textTree {
 
     }
 
-
     public static void keyInput(String txt) {
         Scanner scan = new Scanner(System.in);
 
@@ -50,18 +53,19 @@ public class textTree {
         int a1= scan.nextInt();
 
         switch (a1){
-            case 1: {
+            case 1 -> {
                 System.out.println("\nIN ORDER: ");
                 tester.textInOrder();
-                break;
             }
-            case 2: {
+            case 2 -> {
+                System.out.println("PRE ORDER");
                 tester.textPreOrder();
             }
-            case 3: {
+            case 3 -> {
+                System.out.println("POST ORDER");
                 tester.textPostOrder();
             }
-            case 5: {
+            case 5 -> {
                 mainProgram();
             }
         }
@@ -92,6 +96,7 @@ public class textTree {
             content = content.replaceAll("[^a-zA-Z0-9]", " ");
 
             String[] words = content.split( " ");
+            String[] test = new String[words.length];
 
             tTree = new textTree();
             for (String word : words) {
@@ -110,9 +115,11 @@ public class textTree {
             if (this.data.compareTo(data) < 0) {
                 if (this.left != null) {
                     this.left.addNode(data);
-                } else {
+                }
+                else {
                     this.left = new textTree(data);
                 }
+
             } else {
                 if (this.right != null) {
                     this.right.addNode(data);
@@ -154,6 +161,7 @@ public class textTree {
         }
         System.out.println(this.data);
     }
+
 
     public static void main(String[] args) {
         mainProgram();
