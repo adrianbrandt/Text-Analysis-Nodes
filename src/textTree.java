@@ -3,10 +3,18 @@ import java.util.Scanner;
 
 public class textTree {
 
+    private textNode root;
+
+    public boolean isTreeEmpty()
+    {
+        return (root == null);
+    }
+
     private static class textNode{
         String data;
         textNode left, right;
-        private textNode root;
+
+        public int count = 1;
 
     public textNode(String data){
             this.data = data;
@@ -14,7 +22,7 @@ public class textTree {
         }
 
         void write (){
-            System.out.print(data + " ");
+            System.out.print(data + " x" + count + ", ");
         }
 
         public void addNode(String data) {
@@ -40,25 +48,14 @@ public class textTree {
             }
         }
 
-        public void textPreOrder() {
-            System.out.println(this.data);
-            if (this.left != null) {
-                this.left.textPreOrder();
-            }
-            if (this.right != null) {
-                this.right.textPreOrder();
+        public void textPreOrder(textNode data) {
+            if (data != null){
+                data.write();
+                inOrder(data.right);
+                inOrder(data.left);
             }
         }
 
-        public void textInOrder() {
-            if (this.left != null) {
-                this.left.textInOrder();
-            }
-            System.out.println(data + " ");
-            if (this.right != null) {
-                this.right.textInOrder();
-            }
-        }
 
         public void inOrder(textNode data){
             if (data != null){
@@ -70,46 +67,45 @@ public class textTree {
         }
 
 
-        public void textPostOrder() {
-            if (this.left != null) {
-                this.left.textPostOrder();
+        public void textPostOrder(textNode data) {
+            if (data != null){
+                inOrder(data.right);
+                inOrder(data.left);
+                data.write();
             }
-            if (this.right != null) {
-                this.right.textPostOrder();
-            }
-            System.out.println(this.data);
         }
 
         boolean contains(textNode root, String x) {
             if (root == null)
                 return false;
-            if (Objects.equals(root.data, x))
+            if (Objects.equals(root.data, x)) {
+                root.count += 1;
                 return true;
+            }
 
             return (contains(root.left, x) || contains(root.right, x));
         }
 
-
     }
-
 
     public static textNode createTree(String data ) {
         textNode tree = new textNode(data);
         if( data != null ) {
 
             data = data.replaceAll("[^a-zA-Z0-9]", " ");
-
             String[] words = data.split( " ");
 
             tree = new textNode(null);
             for (String word : words) {
-                if (!tree.contains(tree,word))
-                tree.addNode(word);
+                if (!tree.contains(tree, word)) {
+                    tree.addNode(word);
+                }
             }
 
         }
         return tree;
     }
+
 
     public static void mainProgram(){
 
@@ -166,11 +162,11 @@ public class textTree {
             }
             case 2 -> {
                 System.out.println("PRE ORDER");
-                tester.textPreOrder();
+                tester.textPreOrder(tester);
             }
             case 3 -> {
                 System.out.println("POST ORDER");
-                tester.textPostOrder();
+                tester.textPostOrder(tester);
             }
             case 5 -> {
                 mainProgram();
@@ -179,12 +175,6 @@ public class textTree {
 
 
     }
-
-
-
-
-
-
 
 
 
