@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -48,30 +51,12 @@ public class textTree {
             }
         }
 
-        public void textPreOrder(textNode data) {
-            if (data != null){
-                data.write();
-                inOrder(data.right);
-                inOrder(data.left);
-            }
-        }
-
-
         public void inOrder(textNode data){
             if (data != null){
                 inOrder(data.right);
                 data.write();
                 inOrder(data.left);
 
-            }
-        }
-
-
-        public void textPostOrder(textNode data) {
-            if (data != null){
-                inOrder(data.right);
-                inOrder(data.left);
-                data.write();
             }
         }
 
@@ -107,9 +92,11 @@ public class textTree {
     }
 
 
-    public static void mainProgram(){
+    public static void mainProgram() throws FileNotFoundException {
 
         Scanner scan = new Scanner(System.in);
+        File file = new File("src/input.txt");
+        Scanner read = new Scanner(file);
         String freetxt;
 
         System.out.println("""
@@ -128,60 +115,35 @@ public class textTree {
             case 1 -> {
                 System.out.println("Enter your free text");
                 freetxt = scan.nextLine();
-
                 keyInput(freetxt.toUpperCase());
 
             }
 
             case 2 -> {
-                System.out.println("2");
+                while(read.hasNextLine()){
+                    freetxt = read.nextLine();
+                    keyInput(freetxt.toUpperCase());
+
+                }
+
             }
         }
 
     }
 
     public static void keyInput(String txt) {
-        Scanner scan = new Scanner(System.in);
-
         textNode tester = createTree(txt.toUpperCase());
-
-        System.out.println("""
-                 How would you like to see the text?
-                 In order: 1
-                 Pre order: 2
-                 Post order: 3
-                 Previous menu: 5""");
-
-        int a1= scan.nextInt();
-
-        switch (a1){
-            case 1 -> {
-                System.out.println("\nIN ORDER: ");
-                tester.inOrder(tester);
-
-            }
-            case 2 -> {
-                System.out.println("PRE ORDER");
-                tester.textPreOrder(tester);
-            }
-            case 3 -> {
-                System.out.println("POST ORDER");
-                tester.textPostOrder(tester);
-            }
-            case 5 -> {
-                mainProgram();
-            }
-        }
-
+        System.out.println("\nIN ORDER: ");
+        tester.inOrder(tester);
 
     }
 
 
 
-    public static void main(String[] args) {
+
+
+    public static void main(String[] args) throws FileNotFoundException {
         mainProgram();
-
-
     }
 
 }
