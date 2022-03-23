@@ -1,12 +1,9 @@
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class textTree {
-
-    private textNode root;
 
     private static class textNode{
         String data;
@@ -111,7 +108,6 @@ public class textTree {
                 System.out.println("Enter your free text");
                 freetxt = scan.nextLine();
                 keyInput(freetxt.toUpperCase());
-                break;
             }
 
             case 2 -> {
