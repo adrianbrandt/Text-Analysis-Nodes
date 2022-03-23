@@ -8,11 +8,6 @@ public class textTree {
 
     private textNode root;
 
-    public boolean isTreeEmpty()
-    {
-        return (root == null);
-    }
-
     private static class textNode{
         String data;
         textNode left, right;
@@ -116,14 +111,13 @@ public class textTree {
                 System.out.println("Enter your free text");
                 freetxt = scan.nextLine();
                 keyInput(freetxt.toUpperCase());
-
+                break;
             }
 
             case 2 -> {
                 while(read.hasNextLine()){
                     freetxt = read.nextLine();
                     keyInput(freetxt.toUpperCase());
-
                 }
 
             }
