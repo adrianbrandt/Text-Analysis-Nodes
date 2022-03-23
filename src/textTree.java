@@ -1,8 +1,115 @@
-import org.w3c.dom.Node;
-
+import java.util.Objects;
 import java.util.Scanner;
 
 public class textTree {
+
+    private static class textNode{
+        String data;
+        textNode left, right;
+        private textNode root;
+
+    public textNode(String data){
+            this.data = data;
+            left = right = null;
+        }
+
+        void write (){
+            System.out.print(data + " ");
+        }
+
+        public void addNode(String data) {
+            if (this.data == null) {
+                this.data = data;
+            } else {
+                if (this.data.compareTo(data) < 0) {
+                    if (this.left != null) {
+                        this.left.addNode(data);
+                    }
+                    else {
+                        this.left = new textNode(data);
+                    }
+
+                } else {
+                    if (this.right != null) {
+                        this.right.addNode(data);
+                    } else {
+                        this.right = new textNode(data);
+                    }
+
+                }
+            }
+        }
+
+        public void textPreOrder() {
+            System.out.println(this.data);
+            if (this.left != null) {
+                this.left.textPreOrder();
+            }
+            if (this.right != null) {
+                this.right.textPreOrder();
+            }
+        }
+
+        public void textInOrder() {
+            if (this.left != null) {
+                this.left.textInOrder();
+            }
+            System.out.println(data + " ");
+            if (this.right != null) {
+                this.right.textInOrder();
+            }
+        }
+
+        public void inOrder(textNode data){
+            if (data != null){
+                inOrder(data.right);
+                data.write();
+                inOrder(data.left);
+
+            }
+        }
+
+
+        public void textPostOrder() {
+            if (this.left != null) {
+                this.left.textPostOrder();
+            }
+            if (this.right != null) {
+                this.right.textPostOrder();
+            }
+            System.out.println(this.data);
+        }
+
+        boolean contains(textNode root, String x) {
+            if (root == null)
+                return false;
+            if (Objects.equals(root.data, x))
+                return true;
+
+            return (contains(root.left, x) || contains(root.right, x));
+        }
+
+
+    }
+
+
+    public static textNode createTree(String data ) {
+        textNode tree = new textNode(data);
+        if( data != null ) {
+
+            data = data.replaceAll("[^a-zA-Z0-9]", " ");
+
+            String[] words = data.split( " ");
+
+            tree = new textNode(null);
+            for (String word : words) {
+                if (!tree.contains(tree,word))
+                tree.addNode(word);
+            }
+
+        }
+        return tree;
+    }
 
     public static void mainProgram(){
 
@@ -40,8 +147,7 @@ public class textTree {
     public static void keyInput(String txt) {
         Scanner scan = new Scanner(System.in);
 
-
-        textTree tester = createTree(txt.toUpperCase());
+        textNode tester = createTree(txt.toUpperCase());
 
         System.out.println("""
                  How would you like to see the text?
@@ -55,7 +161,8 @@ public class textTree {
         switch (a1){
             case 1 -> {
                 System.out.println("\nIN ORDER: ");
-                tester.textInOrder();
+                tester.inOrder(tester);
+
             }
             case 2 -> {
                 System.out.println("PRE ORDER");
@@ -73,94 +180,12 @@ public class textTree {
 
     }
 
-    private String data;
-    private textTree left;
-    private textTree right;
-
-    public textTree() {
-        this.data = null;
-        this.left = null;
-        this.right = null;
-    }
-
-    public textTree(String data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-
-    public static textTree createTree( String content ) {
-        textTree tTree = new textTree();
-        if( content != null ) {
-
-            content = content.replaceAll("[^a-zA-Z0-9]", " ");
-
-            String[] words = content.split( " ");
-            String[] test = new String[words.length];
-
-            tTree = new textTree();
-            for (String word : words) {
-                tTree.addNode(word);
-            }
-
-        }
-        return tTree;
-    }
 
 
-    public void addNode(String data) {
-        if (this.data == null) {
-            this.data = data;
-        } else {
-            if (this.data.compareTo(data) < 0) {
-                if (this.left != null) {
-                    this.left.addNode(data);
-                }
-                else {
-                    this.left = new textTree(data);
-                }
-
-            } else {
-                if (this.right != null) {
-                    this.right.addNode(data);
-                } else {
-                    this.right = new textTree(data);
-                }
-
-            }
-        }
-    }
-
-    public void textPreOrder() {
-        System.out.println(this.data);
-        if (this.left != null) {
-            this.left.textPreOrder();
-        }
-        if (this.right != null) {
-            this.right.textPreOrder();
-        }
-    }
-
-    public void textInOrder() {
-        if (this.left != null) {
-            this.left.textInOrder();
-        }
-        System.out.println(this.data);
-        if (this.right != null) {
-            this.right.textInOrder();
-        }
-    }
 
 
-    public void textPostOrder() {
-        if (this.left != null) {
-            this.left.textPostOrder();
-        }
-        if (this.right != null) {
-            this.right.textPostOrder();
-        }
-        System.out.println(this.data);
-    }
+
+
 
 
     public static void main(String[] args) {
