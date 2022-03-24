@@ -70,6 +70,8 @@ public class textTree {
         if( data != null ) {
 
             data = data.replaceAll("[^a-zA-Z0-9]", " ");
+            data = data.replaceAll("  ", " ");
+
             String[] words = data.split( " ");
 
             tree = new textNode(null);
@@ -96,8 +98,7 @@ public class textTree {
                  Choose starting method:
                  Keyboard input: 1
                  File input: 2
-                 
-                 WORDS ARE SORTED FROM BOTTOM(LEFT) TO TOP(RIGHT)""");
+                 """);
 
         int ans = scan.nextInt();
         scan.nextLine();
@@ -127,9 +128,6 @@ public class textTree {
         tester.inOrder(tester);
 
     }
-
-
-
 
 
     public static void main(String[] args) throws FileNotFoundException {
