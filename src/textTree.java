@@ -16,8 +16,9 @@ public class textTree {
             left = right = null;
         }
 
+        //Prints out the word and the amount of times the word was found
         void write (){
-            System.out.print(data + " x" + count + ", ");
+            System.out.print(data + "[" + count + "], ");
         }
 
         public void addNode(String data) {
@@ -43,7 +44,7 @@ public class textTree {
             }
         }
 
-        //Sorts the
+        //Sorts the tree in alphabetical order
         public void inOrder(textNode data){
             if (data != null){
                 inOrder(data.right);
@@ -53,6 +54,7 @@ public class textTree {
             }
         }
 
+        //Sorts through the tree and adds to the counter for each duplicate word|letter
         boolean contains(textNode root, String x) {
             if (root == null)
                 return false;
@@ -61,11 +63,16 @@ public class textTree {
                 return true;
             }
 
+            //Returns a boolean if the current word matches the next word
             return (contains(root.left, x) || contains(root.right, x));
         }
 
     }
-
+    /*
+    Creates the tree and sends the current word through the sorter to only
+    put words without duplicates in the tree. Also uses a regex for symbols
+    and double spaces to get rid of unwanted content that can give wrong output
+     */
     public static textNode createTree(String data ) {
         textNode tree = new textNode(data);
         if( data != null ) {
@@ -86,14 +93,24 @@ public class textTree {
         return tree;
     }
 
+    //Takes input and prints it in order
+    public static void keyInput(String txt) {
+        textNode node = createTree(txt);
+        System.out.println("\nIN ORDER: ");
+        node.inOrder(node);
 
-    public static void mainProgram() throws FileNotFoundException {
+    }
 
+    //Main program
+    public static void main(String[] args) throws FileNotFoundException {
+
+        //Scanner for keyboard input | Scanner for reading content of file
         Scanner scan = new Scanner(System.in);
         File file = new File("src/input.txt");
         Scanner read = new Scanner(file);
         String freetxt;
 
+        //Start of program, user input to choose which input to use
         System.out.println("""
                  Choose starting method:
                  Keyboard input: 1
@@ -103,14 +120,17 @@ public class textTree {
         int ans = scan.nextInt();
         scan.nextLine();
 
+        //Switch case
         switch (ans){
 
+            //Case 1, takes user input and sends it to the keyInput for sorting and printing
             case 1 -> {
                 System.out.println("Enter your free text");
                 freetxt = scan.nextLine();
                 keyInput(freetxt.toUpperCase());
             }
 
+            //Case 2, takes content of file and sends it to the keyInput for sorting and printing
             case 2 -> {
                 while(read.hasNextLine()){
                     freetxt = read.nextLine();
@@ -119,18 +139,6 @@ public class textTree {
 
             }
         }
-
-    }
-
-    public static void keyInput(String txt) {
-        textNode tester = createTree(txt.toUpperCase());
-        System.out.println("\nIN ORDER: ");
-        tester.inOrder(tester);
-
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        mainProgram();
     }
 
 }
