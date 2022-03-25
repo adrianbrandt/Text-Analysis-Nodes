@@ -43,6 +43,7 @@ public class textTree {
             }
         }
 
+        //Sorts the
         public void inOrder(textNode data){
             if (data != null){
                 inOrder(data.right);
@@ -94,7 +95,6 @@ public class textTree {
         String freetxt;
 
         System.out.println("""
-                 Welcome to text analysis
                  Choose starting method:
                  Keyboard input: 1
                  File input: 2
@@ -128,7 +128,6 @@ public class textTree {
         tester.inOrder(tester);
 
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         mainProgram();
